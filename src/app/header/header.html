@@ -1,0 +1,31 @@
+<header class="row mb-4 border-bottom align-items-center">
+
+  <nav class="navbar navbar-expand-md col-md-9 col-8">
+    <div class="container-fluid">
+      <a class="navbar-brand" routerLink="add-booking">
+        <img src="/img/logo.png" width="200" height="80" alt="logo">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" routerLinkActive="active" routerLink="add-booking"> {{ 'add.booking' | translate }} </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" routerLink="events-calendar"> {{ 'events' | translate }} </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="col-md-3 col-4 text-end">
+    @for ( language of languages(); track language){
+      <img [src]="'/flags/' + language + '.png'" [alt]="language" width="32" height="32" class="me-2 mb-md-0 mb-2" (click)="changeLanguage(language)">
+    }
+    <button type="button" class="btn btn-outline-primary me-2" routerLink="login"> {{ 'login' | translate }} </button>
+  </div>
+
+</header>
