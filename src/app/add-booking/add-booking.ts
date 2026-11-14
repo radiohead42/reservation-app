@@ -1,4 +1,4 @@
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgClass } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
@@ -8,7 +8,7 @@ import { IHaircare } from '../models/haircare.model';
 import { IHour } from '../models/hour.model';
 
 @Component({
-  imports: [TranslateModule, ReactiveFormsModule],
+  imports: [TranslateModule, ReactiveFormsModule, NgClass],
   selector: 'app-add-booking',
   styleUrl: './add-booking.scss',
   templateUrl: './add-booking.html',
@@ -22,9 +22,10 @@ export class AddBooking implements OnInit {
   private formBuilder: FormBuilder = inject(FormBuilder);
   private datePipe: DatePipe = inject(DatePipe);
 
-  private formGroup: FormGroup = new FormGroup({});
+  formGroup: FormGroup = new FormGroup({});
 
-  haircares = signal(Hau);
+  haircares = signal<IHaircare[]>([]);
+  hours = signal<IHour[]>([]);
 
   ngOnInit(): void {
       this.formGroup = this.formBuilder.group({
@@ -36,6 +37,8 @@ export class AddBooking implements OnInit {
 
       this.haircareService.getHaircares().subscribe({
         next: (haircares: IHaircare[]) => {
+          this.haircares.set(haircares);
+          this.controlHaircare?.setValue(haircares[0].value)
         },
         error: () => {
         }
@@ -43,10 +46,28 @@ export class AddBooking implements OnInit {
 
       this.hourService.getHours().subscribe({
         next: (hours: IHour[]) => {
+          this.hours.set(hours);
+          this.controlTime?.setValue(hours[0].value)
         },
         error: () => {
         }
       });
+  }
+
+  get controlName() {
+    return this.formGroup.get('name');
+  }
+
+  get controlDate() {
+    return this.formGroup.get('date');
+  }
+
+  get controlTime() {
+    return this.formGroup.get('time');
+  }
+
+  get controlHaircare() {
+    return this.formGroup.get('haircare');
   }
 
   addBooking(): void {
