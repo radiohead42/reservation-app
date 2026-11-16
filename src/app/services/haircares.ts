@@ -2,6 +2,7 @@ import { inject, Service } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
 import { IHaircare } from '../models/haircare.model';
+import { map } from 'rxjs';
 
 @Service()
 export class Haircares {
@@ -11,6 +12,11 @@ export class Haircares {
 
   getHaircares(){
     return this.httpService.get<IHaircare[]>(this.urlBase).pipe()
+  }
+
+  getColor(haircare: string) {
+    return this.httpService.get<IHaircare[]>(`${this.urlBase}?value=${haircare}`).pipe(
+      map( (haircare: IHaircare[]) => haircare[0].color));
   }
 
 }
