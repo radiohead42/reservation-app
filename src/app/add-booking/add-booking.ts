@@ -1,13 +1,14 @@
 import { DatePipe, NgClass } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Haircares } from '../services/haircares';
 import { Hours } from '../services/hours';
 import { IHaircare } from '../models/haircare.model';
 import { IHour } from '../models/hour.model';
 import { Events } from '../services/events';
 import { IBooking } from '../models/booking.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   imports: [TranslateModule, ReactiveFormsModule, NgClass],
@@ -21,6 +22,8 @@ export class AddBooking implements OnInit {
   private readonly haircareService = inject(Haircares);
   private readonly hourService = inject(Hours);
   private readonly eventService = inject(Events);
+  private readonly toastrService = inject(ToastrService);
+  private translateService = inject(TranslateService);
 
   private formBuilder: FormBuilder = inject(FormBuilder);
   private datePipe: DatePipe = inject(DatePipe);
@@ -77,11 +80,17 @@ export class AddBooking implements OnInit {
   addBooking(): void {
     const booking: IBooking = this.formGroup.value;
     this.eventService.createEvent(booking).subscribe({
-      next: (response) => {
-        console.log('Booking added successfully:', response);
+      next: () => {
+        this.toastrService.success(
+          this.translateService.instant('add.booking.success'),
+          this.translateService.instant('success')
+        );
       },
       error: () => {
-        console.error("Ha habido un error");
+        this.toastrService.error(
+          this.translateService.instant('booking.exists'),
+          this.translateService.instant('error')
+        );
       }
     });
   }
