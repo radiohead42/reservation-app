@@ -1,1 +1,19 @@
-<p>events-calendar works!</p>
+<div class="row">
+  <div class="col-12">
+    <div class="row">
+      <div class="col-12">
+        @if (haircares | async; as haircaresList) {
+          @for (haircare of haircaresList; track haircare) {
+            <span class="badge rounded-pill">{{ haircare.value }}</span>
+          }
+        }
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <full-calendar [options]="calendarOptions" [events]="events | async"></full-calendar>
+      </div>
+    </div>
+  </div>
+</div>

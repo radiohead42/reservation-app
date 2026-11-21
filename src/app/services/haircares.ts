@@ -11,7 +11,7 @@ export class Haircares {
   private readonly httpService = inject(HttpClient);
 
   getHaircares(){
-    return this.httpService.get<IHaircare[]>(this.urlBase).pipe()
+    return this.httpService.get<IHaircare[]>(this.urlBase)
   }
 
   getColor(haircare: string) {

@@ -38,6 +38,10 @@ export class Events {
     );
   }
 
+  getEvents() {
+    return this.httpService.get<IEvent[]>(this.urlBase);
+  }
+
   private existEvent(date: string): Observable<boolean> {
     return this.httpService.get<IEvent[]>(`${this.urlBase}?start=${date}`).pipe(
       map( (events: IEvent[]) => events.length > 0 )

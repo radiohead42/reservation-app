@@ -95,6 +95,14 @@
       "backgroundColor": "#32a852",
       "borderColor": "#32a852",
       "id": 12
+    },
+    {
+      "start": "2026-11-21T00:00:00.000Z",
+      "title": "Nuevo",
+      "description": "haircut",
+      "backgroundColor": "#32a852",
+      "borderColor": "#32a852",
+      "id": 13
     }
   ],
   "hours": [
